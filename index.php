@@ -1,59 +1,73 @@
 <?php
 
-$numbers = file('numbers.txt');
-
-$numbers = explode(" ", $numbers[0]);
-
-//var_dump($numbers);
-
-
-function maxValue($numbers)
+class numbers 
 {
-    $min = $numbers[0];
-
-    for ($i=1, $count=count($numbers); $i<$count; $i++)
+    public $count;
+    
+    public function __construct(string $file)
     {
-        if ($numbers[$i] > $max)
+        $this->fileName = $file;
+        $this->count = count($this->getArrayOfNumbers());
+    }
+
+    public function maxValue()
+    {
+        $numbers = $this->getArrayOfNumbers();
+        $max = $numbers[0];
+        //var_dump($this->numbers);
+        for ($i=1, $count=count($numbers); $i<$count; $i++)
         {
-            $max = $numbers[$i];
+            if ($numbers[$i] > $max)
+            {
+                $max = $numbers[$i];
+                //var_dump($max);
+            }
         }
+        //var_dump($max);
+       
+        return $this->max = $max;
     }
-    return $max;
-}
 
-function minValue($numbers)
-{
-    $min = $numbers[0];
-
-    for ($i=1, $count=count($numbers); $i<$count; $i++)
+    public function minValue()
     {
-        if ($numbers[$i] < $min)
+        $numbers = $this->getArrayOfNumbers();
+        $min = $numbers[0];
+
+        for ($i=1, $count=count($numbers); $i<$count; $i++)
         {
-            $min = $numbers[$i];
+            if ($numbers[$i] < $min)
+            {
+                $min = $numbers[$i];
+            }
         }
+        return $this->min = $min;
     }
-    return $min;
-}
 
-function averageValue($numbers)
-{
-    $sum = NULL;
-    $count = count($numbers);
-
-    for ($i=0; $i<$count; $i++)
+    public function averageValue()
     {
-        $sum += $numbers[$i];
+        $numbers = $this->getArrayOfNumbers();
+        $sum = NULL;
+        $count = count($numbers);
+
+        for ($i=0; $i<$count; $i++)
+        {
+            $sum += $numbers[$i];
+        }
+        $average = $sum / $count;
+        return $this->average = $average;
     }
-    $average = $sum / $count;
-    return $average;
+
+    private function getArrayOfNumbers()
+    {
+        $numbers = explode(" ", file_get_contents("numbers.txt"));
+        return $numbers;
+    }
 }
 
 
+$numbers = new numbers('numbers.txt');
+$numbers->averageValue();
+$numbers->minValue();
+$numbers->maxValue();
+var_dump($numbers);
 
-$max = maxValue($numbers);
-$min = minValue($numbers);
-$average = averageValue($numbers);
-
-echo 'Максимальне: ' . $max . '<br>' .
-     'Мінімальне: '  . $min . '<br>' .
-     'Середнє: ' . $average ;
