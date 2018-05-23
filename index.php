@@ -3,6 +3,10 @@
 class numbers 
 {
     public $count;
+    public $fileName;
+    public $max;
+    public $min;
+    public $average;
     
     public function __construct(string $file)
     {
